@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.javaunittest.dao.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.example.javaunittest.domain.User" >
+    <constructor >
+      <idArg column="id" jdbcType="INTEGER" javaType="java.lang.Integer" />
+      <arg column="name" jdbcType="VARCHAR" javaType="java.lang.String" />
+      <arg column="age" jdbcType="INTEGER" javaType="java.lang.Integer" />
+    </constructor>
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id,  name, age
+  </sql>
+
+
+  <select id="getAll" resultType="com.example.javaunittest.domain.User">
+    select
+        <include refid="Base_Column_List"></include>
+    from
+        user
+    order by id
+  </select>
+
+  <select id="getById" resultType="com.example.javaunittest.domain.User">
+    select
+    <include refid="Base_Column_List"></include>
+    from
+        user
+    where
+        id = #{id}
+
+  </select>
+
+
+
+
+  <update id="updateById" parameterType="com.example.javaunittest.domain.User">
+    update user
+    set
+    <trim prefix="" suffix="" suffixOverrides="," >
+    <if test="name != null" >
+      name = #{name},
+    </if>
+    <if test="age != null" >
+      age = #{age},
+    </if>
+    </trim>
+    where
+        id = #{id}
+  </update>
+
+
+  <delete id="deleteById">
+    delete from user
+    where id = #{id}
+
+  </delete>
+
+</mapper>
